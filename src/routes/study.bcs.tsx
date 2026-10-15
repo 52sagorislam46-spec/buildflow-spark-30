@@ -100,7 +100,7 @@ function BcsQuiz() {
   const q = questions[index];
   const reviewed = questions.slice(0, results.length);
 
-  return <div className="min-h-screen bg-background text-foreground">
+  return <div className="bcs-colorful min-h-screen bg-background text-foreground">
     <div className="mx-auto max-w-2xl px-4 py-6">
       <div className="mb-6 flex items-center justify-between">
         <BackButton />
