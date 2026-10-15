@@ -6,7 +6,7 @@ export type Settings = { duration: number; operation: Operation; difficulty: Dif
 export const PULL_TARGET = 8;
 export type Player = { score: number; attempts: number; input: string; problem: Problem; feedback: 'correct' | 'wrong' | null };
 export type Match = { id: string; status: 'ready' | 'countdown' | 'playing' | 'paused' | 'finished'; remaining: number; countdown: number; players: [Player, Player]; winner: number | null; elapsed: number; reason: 'time' | 'pull' };
-export type RecordMatch = { id: string; date: string; winner: number | null; scores: [number, number]; attempts: [number, number]; elapsed: number; operation: Operation; difficulty: Difficulty; mode?: Mode };
+export type RecordMatch = { id: string; date: string; winner: number | null; scores: [number, number]; attempts: [number, number]; elapsed: number; operation: Operation; difficulty: Difficulty; mode?: Mode; names?: [string, string] };
 const integer = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
 export function makeProblem(operation: Operation, difficulty: Difficulty): Problem {
   const op = operation === 'mixed' ? (['addition', 'subtraction', 'multiplication', 'division'] as const)[integer(0, 3)] : operation;
