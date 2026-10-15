@@ -418,3 +418,24 @@ button.setting-active { background: var(--card); color: var(--foreground); box-s
   .match-is-active .answer-display { min-height: 40px; margin-bottom: 9px; }
   .match-is-active .match-bottom { margin-top: 20px; }
 }
+
+/* BCS কুইজ পেজ — রঙিন থিম (শুধু এই পেজে প্রযোজ্য) */
+.bcs-colorful {
+  --primary: oklch(0.58 0.22 27);
+  --primary-foreground: oklch(0.99 0 0);
+  --ring: oklch(0.58 0.22 27);
+  --muted: oklch(0.95 0.035 60);
+  --border: oklch(0.88 0.06 40);
+  --card: oklch(0.995 0.008 60);
+  background: linear-gradient(160deg, oklch(0.96 0.04 25), oklch(0.97 0.04 80) 50%, oklch(0.95 0.05 300));
+}
+.bcs-colorful h1 {
+  background: linear-gradient(90deg, oklch(0.58 0.22 27), oklch(0.65 0.2 50), oklch(0.55 0.22 330));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.bcs-colorful .grid > button:nth-child(4n+1) { border-color: oklch(0.75 0.13 27); background: oklch(0.96 0.03 27); }
+.bcs-colorful .grid > button:nth-child(4n+2) { border-color: oklch(0.75 0.13 150); background: oklch(0.96 0.035 150); }
+.bcs-colorful .grid > button:nth-child(4n+3) { border-color: oklch(0.72 0.13 259); background: oklch(0.96 0.03 259); }
+.bcs-colorful .grid > button:nth-child(4n+4) { border-color: oklch(0.78 0.13 80); background: oklch(0.97 0.04 80); }
+.bcs-colorful .grid > button[aria-pressed="true"] { border-color: var(--primary); background: color-mix(in oklch, var(--primary) 18%, var(--card)); box-shadow: 0 6px 18px -8px var(--primary); }
+.bcs-colorful label:has(input[type="checkbox"]) { border-color: oklch(0.78 0.12 300); background: oklch(0.97 0.03 300); }
