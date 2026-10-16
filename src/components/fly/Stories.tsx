@@ -47,7 +47,7 @@ import {
 
 
 const STORY_TTL = 24 * 60 * 60 * 1000; // 24 hours
-const STORY_DURATION = 5000; // 5s per image story
+const STORY_DURATION = 15000; // 15s per image story
 
 function toMillis(value: unknown): number {
   if (value && typeof value === "object" && "toMillis" in (value as object)) {
@@ -1041,7 +1041,21 @@ function StoryViewer({
 
         {/* media */}
         {story.musicUrl && (
-          <audio key={story.id} src={secureUrl(story.musicUrl)} autoPlay loop className="hidden" />
+          <audio
+            key={story.id}
+            src={secureUrl(story.musicUrl)}
+            autoPlay
+            loop
+            playsInline
+            className="hidden"
+            ref={(a) => {
+              if (!a) return;
+              const tryPlay = () => a.play().catch(() => {});
+              tryPlay();
+              const once = () => { tryPlay(); window.removeEventListener("pointerdown", once); };
+              window.addEventListener("pointerdown", once);
+            }}
+          />
         )}
         {story.musicUrl && (
           <div className="absolute top-16 left-3 z-20 flex items-center gap-1 text-white text-xs bg-black/40 rounded-full px-2 py-1 max-w-[70%]">
