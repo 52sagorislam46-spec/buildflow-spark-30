@@ -69,6 +69,12 @@ export const RTC_CONFIG: RTCConfiguration = {
       username: "openrelayproject",
       credential: "openrelayproject",
     },
+    // Extra free public relay (backup when the others are unreachable).
+    {
+      urls: ["turn:freestun.net:3478", "turn:freestun.net:3478?transport=tcp"],
+      username: "free",
+      credential: "free",
+    },
   ],
   iceCandidatePoolSize: 10,
 };
