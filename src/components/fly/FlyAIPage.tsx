@@ -377,6 +377,7 @@ export function FlyAIPage({
           </button>
         )}
       </form>
+      {viewImg && <ImageLightbox src={viewImg} onClose={() => setViewImg(null)} />}
     </div>
   );
 }
