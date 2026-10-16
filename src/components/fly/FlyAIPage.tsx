@@ -5,6 +5,7 @@ import { ArrowLeft, Bot, Camera, Copy, ImagePlus, Images, Loader2, Mail, Message
 import { db } from "../../lib/firebase";
 import { fetchProfile } from "./chat";
 import type { UserProfile } from "./types";
+import { ImageLightbox } from "./ImageLightbox";
 
 type Item =
   | { role: "user" | "assistant"; content: string; image?: string }
@@ -60,6 +61,7 @@ export function FlyAIPage({
   const [voiceSend, setVoiceSend] = useState(false);
   const [menu, setMenu] = useState<number | null>(null);
   const [toast, setToast] = useState("");
+  const [viewImg, setViewImg] = useState<string | null>(null);
   const galRef = useRef<HTMLInputElement>(null);
   const camRef = useRef<HTMLInputElement>(null);
   const recRef = useRef<{ stop: () => void } | null>(null);
@@ -260,9 +262,9 @@ export function FlyAIPage({
               {m.role === "assistant" ? (
                 <>
                   {m.image && (
-                    <a href={m.image} download="fly-ai.png" target="_blank" rel="noreferrer">
+                    <button type="button" onClick={() => setViewImg(m.image!)} className="block w-full cursor-zoom-in" aria-label="ছবি বড় করে দেখুন">
                       <img src={m.image} alt="AI generated" className="rounded-xl mb-2 w-full" />
-                    </a>
+                    </button>
                   )}
                   {m.content ? (
                     <div className="prose prose-sm max-w-none [&_p]:my-1 [&_ul]:my-1 [&_ol]:my-1">
@@ -375,6 +377,7 @@ export function FlyAIPage({
           </button>
         )}
       </form>
+      {viewImg && <ImageLightbox src={viewImg} onClose={() => setViewImg(null)} />}
     </div>
   );
 }
