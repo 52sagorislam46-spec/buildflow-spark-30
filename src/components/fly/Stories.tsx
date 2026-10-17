@@ -746,7 +746,7 @@ function StoryViewer({
   const [showReactions, setShowReactions] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const musicRef = useRef<HTMLAudioElement | null>(null);
-  const musicStoryId = group?.stories[si]?.id;
+  const musicStoryId = groups[gi]?.stories[si]?.id;
   // Play the story song; stop it when the story changes or the viewer closes.
   useEffect(() => {
     const a = musicRef.current;
