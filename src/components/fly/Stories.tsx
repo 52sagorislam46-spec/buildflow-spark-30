@@ -1373,7 +1373,7 @@ export function StoriesBar() {
                   className="flex flex-col items-center gap-1"
                 >
                   {(() => {
-                    const latest = g.stories[g.stories.length - 1];
+                    const latest = g.stories[g.stories.length - 1]!;
                     const src = secureUrl(latest.mediaUrl);
                     return (
                       <div
