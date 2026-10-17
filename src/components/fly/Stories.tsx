@@ -1372,22 +1372,53 @@ export function StoriesBar() {
                   onClick={() => setViewer(i)}
                   className="flex flex-col items-center gap-1"
                 >
-                  <div
-                    className={`p-[2px] rounded-full ${
-                      hasUnviewed
-                        ? "bg-gradient-to-tr from-sky-400 via-cyan-400 to-fuchsia-400"
-                        : "bg-gray-300"
-                    }`}
-                  >
-                    <Avatar
-                      uid={g.authorId}
-                      src={g.authorPhoto}
-                      alt={`${g.authorName}'s story`}
-                      size={56}
-                      className="ring-2 ring-white"
-                    />
-                  </div>
-                  <span className="text-[11px] text-gray-600 w-16 truncate text-center">
+                  {(() => {
+                    const latest = g.stories[g.stories.length - 1];
+                    const src = secureUrl(latest.mediaUrl);
+                    return (
+                      <div
+                        className={`relative p-[2.5px] rounded-2xl shadow-md ${
+                          hasUnviewed
+                            ? "bg-gradient-to-tr from-sky-400 via-cyan-400 to-fuchsia-400"
+                            : "bg-gray-300"
+                        }`}
+                      >
+                        <div className="relative w-[68px] h-[100px] rounded-[14px] overflow-hidden bg-gray-900 ring-2 ring-white">
+                          {latest.mediaType === "video" ? (
+                            <video
+                              src={`${src}#t=0.1`}
+                              muted
+                              playsInline
+                              preload="metadata"
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <img
+                              src={src}
+                              alt={`${g.authorName}'s story`}
+                              loading="lazy"
+                              className="w-full h-full object-cover"
+                            />
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50" />
+                          <div className="absolute top-1 left-1 rounded-full ring-2 ring-sky-400">
+                            <Avatar
+                              uid={g.authorId}
+                              src={g.authorPhoto}
+                              alt={g.authorName}
+                              size={24}
+                            />
+                          </div>
+                          {g.stories.length > 1 && (
+                            <span className="absolute top-1 right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-black/60 text-white text-[10px] font-bold flex items-center justify-center">
+                              {g.stories.length}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })()}
+                  <span className="text-[11px] font-medium text-gray-700 w-[72px] truncate text-center">
                     {g.authorId === user?.uid ? "You" : g.authorName}
                   </span>
                 </button>
