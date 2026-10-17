@@ -1050,10 +1050,18 @@ function StoryViewer({
             className="hidden"
             ref={(a) => {
               if (!a) return;
-              const tryPlay = () => a.play().catch(() => {});
+              let alive = true;
+              const tryPlay = () => { if (alive) a.play().catch(() => {}); };
               tryPlay();
               const once = () => { tryPlay(); window.removeEventListener("pointerdown", once); };
               window.addEventListener("pointerdown", once);
+              return () => {
+                alive = false;
+                window.removeEventListener("pointerdown", once);
+                a.pause();
+                a.removeAttribute("src");
+                a.load();
+              };
             }}
           />
         )}
