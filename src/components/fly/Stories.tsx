@@ -745,6 +745,28 @@ function StoryViewer({
   const [replySent, setReplySent] = useState(false);
   const [showReactions, setShowReactions] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const musicRef = useRef<HTMLAudioElement | null>(null);
+  const musicStoryId = group?.stories[si]?.id;
+  // Play the story song; stop it when the story changes or the viewer closes.
+  useEffect(() => {
+    const a = musicRef.current;
+    if (!a) return;
+    let alive = true;
+    const tryPlay = () => {
+      if (alive) a.play().catch(() => {});
+    };
+    tryPlay();
+    const once = () => {
+      tryPlay();
+      window.removeEventListener("pointerdown", once);
+    };
+    window.addEventListener("pointerdown", once);
+    return () => {
+      alive = false;
+      window.removeEventListener("pointerdown", once);
+      a.pause();
+    };
+  }, [musicStoryId]);
   const group = groups[gi];
   const story = group?.stories[si];
 
@@ -1048,21 +1070,7 @@ function StoryViewer({
             loop
             playsInline
             className="hidden"
-            ref={(a) => {
-              if (!a) return;
-              let alive = true;
-              const tryPlay = () => { if (alive) a.play().catch(() => {}); };
-              tryPlay();
-              const once = () => { tryPlay(); window.removeEventListener("pointerdown", once); };
-              window.addEventListener("pointerdown", once);
-              return () => {
-                alive = false;
-                window.removeEventListener("pointerdown", once);
-                a.pause();
-                a.removeAttribute("src");
-                a.load();
-              };
-            }}
+            ref={musicRef}
           />
         )}
         {story.musicUrl && (
